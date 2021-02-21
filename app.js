@@ -1,46 +1,28 @@
-// Initialize the page.
-function init() {
-    const map = initMap('map');
-
-    map.fitWorld();
-    map.setZoom(4);
-    
-    const tiles = initTiles();
-    const controls = initControls(tiles);
-
-    tiles["Dark"].addTo(map);
-    controls.addTo(map);
-}
-
-// Initialize the map.
-function initMap(id) {
-    return L.map(id, {
+window.onload = function() {
+    // Initialize the map.
+    const map =  L.map('map', {
 	zoomControl: false,
 	attributionControl: false,
     });
-}
 
-// Initialize the map tiles.
-function initTiles() {
-    const opts = {
-	subdomains: 'abcd',
-	maxZoom: 16,
-	noWrap: true,
+    // Initialize the layers.
+    const layers = {
+	"Dark": L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+	    subdomains: 'abcd',
+	    maxZoom: 16,
+	    noWrap: true,
+	}),
+	"Light": L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
+	    subdomains: 'abcd',
+	    maxZoom: 16,
+	    noWrap: true,
+	}),
     };
 
-    return {
-	"Dark": L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', opts),
-	"Light": L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', opts),
-    };
-}
-
-// Initialize the map controls.
-function initControls(tiles) {
-    return L.control.layers(tiles);
-}
-
-// Read URL query parameter(s).
-function arg(name) {
-    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
-	return decodeURIComponent(name[1]);
-}
+    // Compose the map.
+    map
+	.fitWorld()
+	.setZoom(4)
+	.addLayer(layers["Dark"])
+	.addControl(L.control.layers(layers));
+};
