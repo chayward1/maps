@@ -2,3 +2,8 @@
 #+SUBTITLE: Dark mode maps for veteran privacy bike shedders
 #+AUTHOR: Christopher James Hayward
 #+EMAIL: chris@chrishayward.xyz
+
+#+ATTR_ORG: :width 240
+#+ATTR_HTML: :width 240
+#+ATTR_LATEX: :width 240
+[[./example.png]]
